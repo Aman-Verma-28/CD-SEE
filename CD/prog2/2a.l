@@ -1,30 +1,27 @@
 %{
-#include<stdio.h>
-int key=0,idf=0,op=0;
+	#include<stdio.h>
+	int pos=0;
+	int neg=0;
+	int posf=0;
+	int negf=0;
 %}
-
-id [a-zA-Z_]
+DIGIT [0-9]
 %%
-
-"while"|"if"|"for"|"else"|"int"|"float" {key++;}
-
-"<="|"=="|"="|"++"|"-"|"*"|"+"|"<"|">" {op++;}
-
-[0-9]+{id}* ;
-
-{id}[a-zA-Z_0-9]* {idf++;}
-. ;
-
+([+])?([0-9])+ pos++;
+([-])([1-9])([0-9])* neg++;
+([+])?([0-9])+[/]([+])?([1-9])+ posf++;
+([-])([1-9])([0-9])*[/]([-])([1-9])([0-9])* posf++;
+([+])?([0-9])+[/]([-])([1-9])([0-9])* negf++;
+([-])([1-9])([0-9])*[/]([+])?([1-9])+ negf++;
+\+?{DIGIT}*\.{DIGIT}+ posf++;
+-{DIGIT}*\.{DIGIT}+	 negf++;
 %%
-
-int yywrap()
+int main()
 {
- return 1;
-}
-int main(int c, char* argv[])
-{
-  printf("Enter string: \n");  
-  yylex();
-  printf("%d %d %d",key,op,idf);
-
+	yylex();
+	printf("\nNo. of positive numbers: %d", pos);
+	printf("\nNo. of Negative numbers: %d", neg);
+	printf("\nNo. of Positive numbers in fractions: %d", posf);
+	printf("\nNo. of Negative numbers in fractions: %d\n", negf);
+	return 0;
 }
