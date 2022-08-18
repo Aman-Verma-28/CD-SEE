@@ -1,13 +1,23 @@
 %{
+#include<stdio.h>
 #include "y.tab.h"
 %}
+
 %%
-"if" return IF;
-"else" return ELSE;
-[(] return LPAREN;
-[)] return RPAREN;
-[{] return LF;
-[}] return RF;
-[a-z]* return EXP;
-[ ] return SPACE;
-\n return 0;%%
+"if" {return IF;}
+"else" {return ELSE;}
+[0-9]+ {return NUM;}
+[a-zA-Z]+ {return EXP;}
+[ ] {return SPACE;}
+[+] {return '+';}
+[-] {return '-';}
+[<] {return '<';}
+[>] {return '>';}
+[=] {return '=';}
+[;] {return ';';}
+[(] {return '(';}
+[)] {return ')';}
+[{] {return '{';}
+[}] {return '}';}
+
+%%

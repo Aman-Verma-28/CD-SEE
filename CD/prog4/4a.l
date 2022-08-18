@@ -9,7 +9,6 @@ int k=0,v=0,d=0,o=0;
 [a-zA-Z_][a-zA-Z0-9_]* v++;
 [0-9] d++;
 . ;
-\n return 0;
 %%
 
 int main()
